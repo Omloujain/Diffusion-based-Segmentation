@@ -12,11 +12,37 @@ from . import dist_util, logger
 from .fp16_util import MixedPrecisionTrainer
 from .nn import update_ema
 from .resample import LossAwareSampler, UniformSampler
-from visdom import Visdom
-viz = Visdom(port=8850)
-loss_window = viz.line( Y=th.zeros((1)).cpu(), X=th.zeros((1)).cpu(), opts=dict(xlabel='epoch', ylabel='Loss', title='loss'))
-grad_window = viz.line(Y=th.zeros((1)).cpu(), X=th.zeros((1)).cpu(),
-                           opts=dict(xlabel='step', ylabel='amplitude', title='gradient'))
+#from visdom import Visdom
+#viz = Visdom(port=8850)
+
+
+import matplotlib.pyplot as plt
+loss_window = plt.line( Y=th.zeros((1)).cpu(), X=th.zeros((1)).cpu(), opts=dict(xlabel='epoch', ylabel='Loss', title='loss'))
+grad_window = plt.line(Y=th.zeros((1)).cpu(), X=th.zeros((1)).cpu(),
+                           #opts=dict(xlabel='step', ylabel='amplitude', title='gradient'))
+# Create a figure and set up the x and y axis labels
+fig, ax = plt.subplots()
+ax.set_xlabel('epoch')
+ax.set_ylabel('Loss')
+ax.set_title('Loss Plot')
+
+# Create a line plot for the loss
+loss_plot, = ax.plot(0, 0)
+
+# Create a second figure for the gradient plot
+fig2, ax2 = plt.subplots()
+ax2.set_xlabel('step')
+ax2.set_ylabel('amplitude')
+ax2.set_title('Gradient Plot')
+
+# Create a line plot for the gradient
+grad_plot, = ax2.plot(0, 0)
+
+plt.show()
+
+#loss_window = viz.line( Y=th.zeros((1)).cpu(), X=th.zeros((1)).cpu(), opts=dict(xlabel='epoch', ylabel='Loss', title='loss'))
+#grad_window = viz.line(Y=th.zeros((1)).cpu(), X=th.zeros((1)).cpu(),
+                           #opts=dict(xlabel='step', ylabel='amplitude', title='gradient'))
 
 
 # For ImageNet experiments, this was a good default value.
